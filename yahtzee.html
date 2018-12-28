@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Yahtzee!</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	</head>
+
+	<style>
+		#counter:before {
+			content: attr(value);
+		}
+
+		.dice {
+			float: left;
+			text-align: center;
+
+			width: 100px;
+			height: 100px;
+			background: pink;
+			margin: 8px;
+		}
+		.dice:before {
+			display: block;
+			content: attr(value);
+
+			font-size: 32px;
+		}
+		.dice input {
+			display: inline-block;
+		}
+
+		#deck {
+			float: none;
+			display: inline-block;
+		}
+		#reroll {
+			display: inline-block;
+		}
+	</style>
+	<body>
+		<div id='deck'></div>
+		<br>
+		<div id='counter'></div>
+		<button id='reroll'>ReRoll</button>
+
+
+
+		<script src="yahtzee.js"></script>
+	</body>
+</html>
