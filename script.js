@@ -178,7 +178,7 @@ function fillResult(id, result){
 function makeButton(id, parentID, obj){
 	if(document.getElementById(id) != null){
 		var handEl = document.getElementById(parentID); // Remove the button from parentID with id = id
-		handEl.removeChild(document.getElementById(id));		
+		handEl.removeChild(document.getElementById(id));
 	}
 	// Create new Button
 	var el = document.getElementById(parentID);
@@ -199,7 +199,7 @@ function makeButton(id, parentID, obj){
 function cleanResult(id, parentID){
 	if(id === undefined){
 		id = ID_SUBMIT_BUTTON;
-	} 
+	}
 	if(parentID === undefined){
 		parentID = ID_SUBMIT_BUTTON_DIV;
 	}
@@ -217,9 +217,9 @@ function checkEnd(player){
 	let totalScore = player.totalScore();
 	if(player.isFinished()){
 		console.log(player.name + ' filled all entries');
-		document.getElementById(ID_PLAYER_SCORE + player.name).innerHTML = player.name + ' Final Score: ' + totalScore;	
+		document.getElementById(ID_PLAYER_SCORE + player.name).innerHTML = player.name + ' Final Score: ' + totalScore;
 	} else {
-		document.getElementById(ID_PLAYER_SCORE + player.name).innerHTML = player.name + ' score: ' + totalScore;	
+		document.getElementById(ID_PLAYER_SCORE + player.name).innerHTML = player.name + ' score: ' + totalScore;
 	}
 }
 
@@ -268,7 +268,7 @@ function Player(name){
 
 	this.isFinished = function(){
 		return this.num1 != -1 && this.num2 != -1 && this.num3 != -1 && this.num4 != -1 && this.num5 != -1 && this.num6 != -1
-		 	&& this.pair != -1 && this.dpair != -1 && this.triple != -1 && this.quad != -1 && this.sladder != -1 && this.bladder != -1 && this.fullHouse != -1 
+		 	&& this.pair != -1 && this.dpair != -1 && this.triple != -1 && this.quad != -1 && this.sladder != -1 && this.bladder != -1 && this.fullHouse != -1
 		 	&& this.yatzy != -1 && this.chance != -1;
 	}
 
@@ -292,3 +292,6 @@ function Player(name){
 		return total;
 	}
 }
+
+//!!
+console.log('I was here!!!!');
