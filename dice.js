@@ -6,7 +6,7 @@ function roll(sides) {
 }
 
 // Create hand for a new turn
-function turn(amount, sides, rolls) {
+function Turn(amount, sides, rolls) {
 	// Number of sides on the dice
 	this.sidesDice = sides || 6;
 
@@ -15,13 +15,13 @@ function turn(amount, sides, rolls) {
 
 	// Create array with dice
 	this.dice = [];
-	for (let i = amount; i > 0; i--) {
+	for (let i = amount || 5; i > 0; i--) {
 		this.dice.push(roll(this.sidesDice));
 	}
 }
 
 // Draw the dice on the 'table'
-turn.prototype.draw = function (table) {
+Turn.prototype.draw = function (table) {
 	this.elm = [];
 	this.locks = [];
 	this.table = table;
@@ -49,7 +49,7 @@ turn.prototype.draw = function (table) {
 };
 
 // Reroll unselected dice
-turn.prototype.reroll = function () {
+Turn.prototype.reroll = function () {
 	// Ignore request if all locks are checked or if counter has reached zero
 	if (this.locks.every((lock) => lock.checked) || this.counter < 1) {
 		console.error('Unable to reroll dice');
@@ -78,18 +78,35 @@ turn.prototype.reroll = function () {
 	return this;
 };
 
+// Clean up 'table'
+Turn.prototype.cleanup = function () {
+	// Clear 'table' of dice
+	this.elm.forEach((elm) => {
+		this.table.removeChild(elm);
+	});
+			
+	//!! Empty button callback and display attribute
+	//!!this.button.onclick = null;
+	//!!this.display.removeAttribute('value');
+};
+
 // Callback for every reroll
-turn.prototype.onreroll = null;
+Turn.prototype.onreroll = null;
 
 // Callback for last reroll
-turn.prototype.onlast = null;
+Turn.prototype.onlast = null;
+
 
 
 // Map 'reroll' to a button
-turn.prototype.mapReroll = function (button, display) {
-	// Update display for rerolls
+Turn.prototype.mapReroll = function (button, display) {
+	// On reroll updates
 	this.onreroll = () => {
+		// Update display for rerolls
 		if (display) display.setAttribute('value', this.counter);
+
+		// Updates available options for results 
+		diceToEvaluate(this.dice);
 	};
 
 	// Disable button on last reroll
@@ -104,26 +121,3 @@ turn.prototype.mapReroll = function (button, display) {
 	// Return this
 	return this;
 };
-
-
-// Clean up 'table'
-turn.prototype.end = function () {
-	// Clear 'table' of dice
-	this.elm.forEach((elm) => {
-		this.table.removeChild(elm);
-	});
-
-	// Empty button callback and display attribute
-	this.button.onclick = null;
-	this.display.removeAttribute('value');
-};
-
-
-
-
-
-
-//!!
-let hand = new turn(5);
-hand.draw(document.querySelector('#deck'));
-hand.mapReroll(document.querySelector('#reroll'), document.querySelector('#counter'));
