@@ -1,4 +1,6 @@
 'use strict';
+//!!## rework this entire thing to use server and client objects
+//!!## send stringified data between them to do thing
 
 // Roll random number from 1 to 'sides'
 function roll(sides) {
@@ -21,6 +23,7 @@ function Turn(amount, sides, rolls) {
 }
 
 // Draw the dice on the 'table'
+//!!## client side
 Turn.prototype.draw = function (table) {
 	this.elm = [];
 	this.locks = [];
@@ -49,6 +52,7 @@ Turn.prototype.draw = function (table) {
 };
 
 // Reroll unselected dice
+//!!## server side, change from checkboxes to array
 Turn.prototype.reroll = function () {
 	// Ignore request if all locks are checked or if counter has reached zero
 	if (this.locks.every((lock) => lock.checked) || this.counter < 1) {
@@ -84,7 +88,7 @@ Turn.prototype.cleanup = function () {
 	this.elm.forEach((elm) => {
 		this.table.removeChild(elm);
 	});
-			
+
 	//!! Empty button callback and display attribute
 	//!!this.button.onclick = null;
 	//!!this.display.removeAttribute('value');
@@ -105,7 +109,7 @@ Turn.prototype.mapReroll = function (button, display) {
 		// Update display for rerolls
 		if (display) display.setAttribute('value', this.counter);
 
-		// Updates available options for results 
+		// Updates available options for results
 		diceToEvaluate(this.dice);
 	};
 
