@@ -27,16 +27,33 @@ const ID_PLAYER_SCORE = 'pScore_';
 
 const TEXT_SAVE = 'Spara';
 
+let players = [];
+let activePlayer = 0;
+let hand;
+
 function start(){
 	createPlayer('P1');
 	createPlayer('P2');
 	activePlayer = 0;
+	startTurn();
 	/*
 	fillResult(ID_RESULT, evaluate(getActivePlayer(), [1,2,3,4,5]));
 	prettyPrint('*** Testing evaluate for [1,2,3,4,5]: ', evaluate([1,2,3,4,5]));
 	prettyPrint('*** Testing evaluate for [2,2,3,3,3]: ', evaluate([2,2,3,3,3]));
 	prettyPrint('*** Testing evaluate for [5,5,5,5,6]: ', evaluate([5,5,5,5,6]));
 	*/
+}
+
+function startTurn(){
+	if (hand) {
+		// Re-enable button
+		document.querySelector('#reroll').disabled = false;
+
+		hand.cleanup();
+	}
+	hand = new turn();
+	hand.draw(document.querySelector('#table'));
+	hand.mapReroll(document.querySelector('#reroll'), document.querySelector('#counter'));
 }
 
 function evaluate(player, hand){
@@ -142,15 +159,9 @@ function createPlayer(name){
 	document.getElementById('playerScore').appendChild(div);
 }
 
-function diceToEvaluate(){
+function diceToEvaluate(array){
 	cleanResult();
-	var diceForm = document.getElementById("diceForm");
-	var diceArr = [];
-	for (let i = 0; i < diceForm.elements.length; i++) {
-		diceArr.push(parseInt(diceForm.elements[i].value));
-	}
-	diceArr = diceArr.slice(0, diceForm.length-1);
-	fillResult(ID_RESULT, evaluate(getActivePlayer(), diceArr));
+	fillResult(ID_RESULT, evaluate(getActivePlayer(), array));
 }
 
 function fillResult(id, result){
@@ -193,7 +204,19 @@ function makeButton(id, parentID, obj){
 		player.setEntry(obj.name, obj.score);
 		cleanResult(id, parentID);
 		checkEnd(player);
+		changeTurn();
+		startTurn();
 	});
+}
+
+// Changes activeplayer to next player in order
+// When @ top index, goes to 0
+function changeTurn(){
+	if(activePlayer + 1 >= players.length){
+		activePlayer = 0;
+	} else {
+		activePlayer++;
+	}
 }
 
 function cleanResult(id, parentID){
@@ -223,15 +246,10 @@ function checkEnd(player){
 	}
 }
 
-// TODO: Initialize these, and update them
-var players = [];
-var activePlayer = 0;
-
 function getActivePlayer(){
 	return players[activePlayer];
 }
 
-// TODO: 'Cross something of' option
 function Player(name){
 	this.name = name;
 	this.num1 = -1;
@@ -292,6 +310,3 @@ function Player(name){
 		return total;
 	}
 }
-
-//!!
-console.log('I was here!!!!');
