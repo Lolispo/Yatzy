@@ -11,3 +11,34 @@
     -1px 1px 0 #000,
     1px 1px 0 #000;  
 }
+
+#counter:before {
+	content: attr(value);
+}
+
+.dice {
+	float: left;
+	text-align: center;
+
+	width: 100px;
+	height: 100px;
+	background: pink;
+	margin: 8px;
+}
+.dice:before {
+	display: block;
+	content: attr(value);
+
+	font-size: 32px;
+}
+.dice input {
+	display: inline-block;
+}
+
+#table {
+	float: none;
+	display: inline-block;
+}
+#reroll {
+	display: inline-block;
+}
