@@ -51,7 +51,7 @@ function startTurn(){
 
 		hand.cleanup();
 	}
-	hand = new turn();
+	hand = new Turn();
 	hand.draw(document.querySelector('#table'));
 	hand.mapReroll(document.querySelector('#reroll'), document.querySelector('#counter'));
 }
