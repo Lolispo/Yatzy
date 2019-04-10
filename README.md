@@ -18,6 +18,8 @@ Strike-through option from evaluate
 
 #### QoL
 
+Show whose turn it is
+
 Sort Dice between Re-rolls
 
 Print entire results
